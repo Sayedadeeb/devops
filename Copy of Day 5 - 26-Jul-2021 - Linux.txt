@@ -1,0 +1,97 @@
+
+
+++++++++++++++++
+The Pipe is a command in Linux that lets you use two or more commands,
+ such that output of one command serves as input to the next.
+
+ head -5 f10 | tail -1 
+
+  date | wc -l   
++++++++++++++++++++++++++
+
+
+++++++++++
+
+ d1
+  -------- d2
+                --------------d3
+                                     --------------------d4
+
+
+---------------------
+An APT repository is a collection of packages 
+APT repository allows you to perform package install, removal, upgrade operations on individual packages.
+
+tree d1 
+
+To install packages
+
+apt-get install packagename
+
+
+Step 1: Update apt  repository 
+Step 2: Install the package
+
+Syntax of Step 1:  Update apt repository
+sudo apt-get update
+
+Syntax of Step 2: Install the required package
+
+sudo apt-get install package_name
+sudo apt-get install tree
+
+
+
+To remove the package
+sudo apt-get remove tree
+
+-----------------------------------------
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Vi Editor
+-------------
+Basic editor in linux
+
+To create a file
+i  - to go to insert mode
+
+:wq  -- save and exit
+
+:q!  -- exit without saving
+
+Default mode - command mode
+
+
+Esc - to come out of insert mode  to command mode
+dd   - to delete a line
+
+yy  --  to copy the line
+p  - to paste  below
+
+++++++++++++++++++++++++++++++++++++++++++++++
+
+What is Git?
+-----------------------
+
+Git is  a Version controlling tool  /  SCM  tool.  ( Source code mgmt tool )
+
+
+
+
+Version control systems are tools that help a software team manage changes to source code over time.
+
+For almost all software projects, the source code is like the crown jewels - a precious asset whose value must be protected. 
+
+VCS are sometimes known as SCM (Source Code Management) tool.
+
+Most widely used modern version control system in the world today is Git. 
+Git is a mature, actively maintained open source tool originally developed in 2005 by Linus Torvalds, the famous creator of the Linux operating system kernel. 
+
+Two types Version Controlloing
+1) Centrailized Version controlling 
+2) Distributed Version controlling
+
+
+
+
+Git is Distributed Version controlling.
