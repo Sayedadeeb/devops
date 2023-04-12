@@ -1,0 +1,8 @@
+node (master/slave)
+{
+	stage (stage in CI -CD)
+	{
+	    GROOVY CODE FOR IMPLEMENTING THE STAGE
+
+	}
+}

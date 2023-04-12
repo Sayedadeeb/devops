@@ -1,0 +1,65 @@
+$ sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
+
+Install the HashiCorp GPG key.
+	
+	$ wget -O- https://apt.releases.hashicorp.com/gpg | \
+gpg --dearmor | \
+sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+
+Verify the key's fingerprint.
+
+	$ gpg --no-default-keyring \
+--keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg \
+--fingerprint
+
+Add the official HashiCorp repository to your system.
+
+	$ echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+sudo tee /etc/apt/sources.list.d/hashicorp.list
+
+Download the package information from HashiCorp.
+
+ $ sudo apt update
+
+Install Terraform from the new repository.
+
+ $ sudo apt-get install terraform
+ 
+Verify that the installation worked 
+
+	$ terraform --version
+
+##############
+
+resource "local_file" "devops"{
+        filename - "/home/ubuntu/Terraform/terraform_local/devops_automated.txt"
+        content - "I want to become a DevOps Engineer who knows Terraform"
+}
+
+
+resource "random_string" "rand-str" {
+length = 16
+special = true
+override_special = "#$%8°0-_=+1 <>?"
+
+}
+
+output "rand-str" {
+
+value = random_string.rand-str[*].result
+}
+
+
+######
+
+$ terraform init
+$ terraform validate
+$ terraform apply
+
+When you run $ terraform apply command to create an infrastructure on cloud, Terraform creates a state file called “terraform.tfstate”. This State File contains full details of resources in our terraform code. When you modify something on your code and apply it on cloud, terraform will look into the state file, and compare the changes made in the code from that state file and the changes to the infrastructure based on the state file.  
+
+local_file.devops
+random_string.rand-str
+
+

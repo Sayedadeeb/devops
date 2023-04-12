@@ -1,0 +1,65 @@
+##############################  Multi Container Architecture  ##################
+
+1) --link
+2) docker-compose
+
+
+# Create a docker compose file for setting up LAMP Architecture
+
+# vim docker-compose.yml
+
+#1
+
+---
+version: '3'
+
+services:
+ mydb:
+  image: mysql:5
+  enviroment:
+   MYSQL_ROOT_PASSWORD: adeeb
+
+ apache:
+  image: tomee
+  ports:
+   - 6060:8080
+  links:
+   - mydb:mysql
+  
+ php:
+  image: php
+  links:
+   - mydb:mysql
+   - apache:tomcat
+
+...
+
+
+#2
+
+---
+version: "3"
+services:
+ devserver:
+  image: jenkins/jenkins
+  ports:
+   - 7070:8080
+
+ qaserver:
+  image: tomee
+  ports:
+   - 8888:8080
+  links:
+   - devserver:jenkins
+
+ prodserver:
+  image: tomee
+  ports:
+   - 9090:8080
+  links:
+   - devserver:jenkins
+
+...
+links:
+- dev
+ 
