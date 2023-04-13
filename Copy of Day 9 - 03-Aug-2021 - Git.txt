@@ -1,0 +1,21 @@
+
+How to selectively pickup the commit's from child branch ( Cherry-pick )
+
+$ git  cherry-pick   af7f4dc    6b8166d     ( commit id's)
+
+
++++++++++++++++++++++
+
+Git Ammend
+----------------
+
+$ git commit  --amend  -m "a"
+
+
+How to go back to previous version of code
+----------------------------------------------
+git reset --hard c9187df
+
+
+
+
