@@ -1,0 +1,98 @@
+######################### DOCKER FILE ########################
+
+
+--------------------
+This is a simple text file, which uses  predefinied keywords for creating customized docker images.
+
+Key words used in docker file  ( case sensitive )
+
+1) FROM  --  used to specify the base image from which the docker file has to be created.
+
+2) MAINTAINER -- This represents name of the organization or the
+ author who created this docker file.
+
+3) CMD   -- This is used to specify the initial command that should be executed when the container 	starts.
+
+4) ENTRYPOINT - used to specify the default process that should be executed when container starts.
+It can also be used for accepting arguments from the CMD instruction.
+
+5) RUN  -- Used for running linux commands within the container. It is generally helpful for installing the software in the container.
+
+6) USER  --      used to specify the default user who should login into the container.
+
+7) WORKDIR --  
+    Used to specify default working directory in the container
+
+8) COPY  --  Copying the files from the host machine to the container.
+
+9) ADD  -- Used for copying files  from host to container, it can also be used for downloading files from remote servers.
+
+10) ENV  --  used for specifying the environment variables that should be passed to the container.
+
+EXPOSE -- Used to specify the internal port of the container
+VOLUME  --  used to specify the default volume that should be attached to the container.
+LABEL  --  used for giving label to the container
+STOPSIGNAL  -- Used to specify the key sequences that have to be passed in order to stop the container.
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+# vim dockerfile
+FROM centos
+MAINTAINER logiclabs
+CMD ["date"]
+CMD ["ls", "-la"]
+
+:wq
+
+# docker build -t  mycentos . 
+
+# docker run -it   mycentos
+( Observation, we get ls -la output )
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+In ubuntu container, I want to install git in it.
+
+
+Lets remove the docker file
+# rm dockerfile
+#  vim dockerfile
+
+FROM ubuntu
+MAINTAINER logiclabs
+RUN apt-get update
+RUN apt-get install -y git
+
+:wq
+
+
+Note:  CMD  -- will run  when container starts.
+       RUN  --  will executed when image is created.
+
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+We are trying to change the default process of the container.
+-------------------------------------------------------------
+
+# vim dockerfile
+
+FROM ubuntu
+MAINTAINER logiclabs
+
+RUN apt-get update
+RUN apt-get install -y default-jdk
+
+ADD http://mirrors.jenkins.io/war-stable/latest/jenkins.war  /
+ENTRYPOINT ["java","-jar","jenkins.war"]
+
+:wq
+
+Build an image from the dockerfile
+# docker build -t  myubuntu  .

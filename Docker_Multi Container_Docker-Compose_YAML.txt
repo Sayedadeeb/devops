@@ -1,0 +1,83 @@
+Installing Docker compose
+-----------------------
+1) Open https://docs.docker.com/compose/install/
+2) Go to linux section
+   Copy and pase the below two commands
+
+#    sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+# sudo chmod +x /usr/local/bin/docker-compose
+	
+How to check docker compose is installed or not?
+
+# docker-compose  --version
+
++++++++++++++++++++++++++
+
+
+---
+version: '3'
+
+services:
+ mydb:
+  image: mysql:5
+  environment:
+   MYSQL_ROOT_PASSWORD: sunilsunil
+
+ apache:
+  image: tomee
+  ports:
+   - 6060:8080
+  links:
+   - mydb:mysql
+
+
+ php:
+  image: php
+  links:
+   - mydb:mysql
+   - apache:tomcat
+...
+
+
+:wq
+
+# docker-compose up -d
+
++++++++++++++++++++++++++++++++++++++
+
+Docker-compose file for setting up CI-CD Environment.
+jenkins container is linked with two tomcat containers 
+
+
+# vim docker-compose.yml
+
+---
+version: '3'
+services:
+ devserver:
+  image: jenkins/jenkins
+  ports:
+   - 7070:8080
+
+ qaserver:
+  image: tomee
+  ports:
+   - 8899:8080
+  links:
+   - devserver:jenkins
+
+
+ prodserver:
+  image: tomee
+  ports:
+   - 9090:8080
+  links:
+   - devserver:jenkins
+...
+
+
+:wq
+
+# docker rm -f $(docker ps -aq)
+# docker-compose up -d

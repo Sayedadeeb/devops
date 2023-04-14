@@ -1,0 +1,75 @@
+
+######## DOCKER_MULTI CONTAINER_--LINKS_YAML ##############################
+
+
+
+Create LAMP  Architecture using docker
+
+L -- linux
+A -- apache tomcat
+M -- mysql
+P --  php
+
+( Linux os we already have )
+
+
+
+
+Lets remove all the docker containers
+# docker rm  -f  $(docker ps -aq)
+
+# docker container ls  (  we have no containers now )
+
+1)  TO start mysql as container
+# docker run --name mydb  -d  -e  MYSQL_ROOT_PASSWORD=sunil  mysql:5
+
+
+2)  TO start tomcat as container
+# docker run  --name  apache  -d  -p 6060:8080  --link mydb:mysql  tomee
+
+
+
+
+TO see the list of containers
+# docker container ls
+
+To check if tomcat is linked with mysql
+# docker inspect apache      ( apache is the name of the container )
+
+
+3)  TO start php as container
+# docker  run --name php  -d --link apache:tomcat  --link mydb:mysql    php
+
+
+++++++++++++++++++++
+Ex 4:
+Create CI-CD environment, where jenkins container is linked with two tomcat containers.
+
+
+Lets delete all the container
+# docker rm  -f  $(docker ps -aq)
+
+To start jenkins as a container
+# docker run  --name  devserver  -d -p 7070:8080 jenkins/jenkins
+
+
+to check jenkins is running or not?
+Open browser
+public_ip:7070
+http://18.138.58.3:7070
+
+We need two tomcat containers  ( qa server and prod server )
+# docker run --name  qaserver  -d  -p 8080:8080 --link devserver:jenkins tomee
+
+
+to check the tomcat   use public_ip but port number will be 8080
+http://18.138.58.3:8080
+
+
+
+
+
+
+# docker run --name  prodserver  -d  -p 9090:8080 --link devserver:jenkins tomee
+to check the tomcat of prodserver
+http://18.138.58.3:9090
