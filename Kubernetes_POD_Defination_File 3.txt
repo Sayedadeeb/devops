@@ -1,0 +1,25 @@
+
++++++++++++++++++++++++++++++ POD DEFINITION FILE 3 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+Ex3:  
+
+vim pod-definition3.yml
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+ name: jenkins-pod
+ labels:
+  author: sunil
+  ci: cd
+spec:
+ containers:
+  - name: myjenkins
+    image: jenkins/jenkins
+    ports:
+     - containerPort: 8080
+       hostPort: 8080
+
+:wq

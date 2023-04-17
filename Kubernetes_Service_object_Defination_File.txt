@@ -1,0 +1,81 @@
+++++++++++++++++++++++++++++++++++ SERVICE OBJECT  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+Service Object
+-----------------------
+This is used for network load balancing and port mapping.
+Service Object uses 3 ports
+1. Target port -  Its is pod or container port 
+2. port - Refers to service port.
+3. hostPort -  Refers to host machine port to make it accessable from external network.
+
+
+Service Objects are classified into 3 types
+
+1. clusterIP: This is default type of service object used in kubermetes and it is used when we want the pods in the cluster to communicate with each other and not with external network.
+
+2. nodePort: This is used, if we want to access the pods from an external network and it also performs network load balancing. ie Even if a pod is running on a specific slave, we can access it from other slave in the cluster.
+
+3. LoadBalancer:    This is similar to nodePort. It is used for external connectivity of a pod and also network load balancing and it also assigns a  public ip for all the nodes  combined together.
+
++++++++++++++++++++++++
+
+	$ vim pod-definition1.yml
+
+We will be creating a service object for the labels used in pod-definition1.yml
+
+	$ kubectl create -f pod-definition1.yml
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+vim pod-definition1.yml
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+ name: nginx-pod
+ labels:
+  author: sunil
+  type: reverse-proxy
+spec:
+ containers: 
+  - name: appserver
+    image: nginx
+
+:wq
+
+kubectl create -f pod-definition1.yml
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+vim service1.yml
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: nginx-service
+ labels:
+  author: sunil
+spec:
+ type: NodePort
+ ports:
+  - targetPort: 80
+    port: 80
+    nodePort: 30008
+ selector:
+  author: sunil
+  type: reverse-proxy
+... 
+
+:wq
+
+ 
+kubectl create -f service1.yml
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+

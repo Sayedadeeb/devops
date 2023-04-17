@@ -1,0 +1,41 @@
++++++++++++++++++++++++++++++ REPLICATION CONTROLLER DEFINITION FILE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ReplicationController:
+This is an high level object used for handling multiple replicas of a specific pod. Here we can perform load balancing and scalling.
+ReplicationController uses keys like replicas, template" etc in the "spec" section.
+In template section we can give metadata related to the pod and also use another spec section where we can give containers information.
+
+
+
+
+
+Ex: Create  a replication controller for creating 3 replicas of httpd
+
+
+$ vim  replication-controller.yml
+
+
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+ name: httpd-rc
+ labels:
+  author: sunil
+spec:
+ replicas: 3
+ template:
+  metadata:
+   name: httpd-pod
+   labels:
+    author: sunil
+  spec:
+   containers:
+    - name: myhttpd
+      image: httpd
+      ports:
+       - containerPort: 80
+         hostPort: 8080
+
+
+:wq

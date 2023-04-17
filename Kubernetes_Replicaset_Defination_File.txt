@@ -1,0 +1,73 @@
+
++++++++++++++++++++++++++++++ REPLICASET DEFINITION FILE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ReplicaSet
+---------------
+
+Pod is the smallest kubernetes object, which we worked on.
+Next Level is replication controller.
+ReplicaSet is similar to replication controller.
+In replicatSet, we have an additional field in spec section called as "selector" field.
+
+This selector uses a child element called "matchLabels"   , where it will search for pods based on a 
+specific label name, and adds them to the cluster.
+
+
+
+
+Ex: Create a replicaset file to start 4 tomcat replicas and then perform scaling  
+
+$ vim replica-set.yml
+
+
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+ name: tomcat-rs
+ labels:
+  type: webserver
+  author: sunil
+spec:
+ replicas: 4
+ selector:
+  matchLabels:
+   type: webserver
+ template:
+  metadata:
+   name: tomcat-pod
+   labels:
+    type: webserver
+  spec:
+   containers:
+    - name: mywebserver
+      image: tomcat
+      ports:
+       - containerPort: 8080
+         hostPort: 9090
+
+ 
+:wq
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Lets perform scaling from 4 pods to 6 pods
+
+
+OPTION 1:
+	We can open the definition file and make changes in the code from 4 to 6 in replicas field.
+
+$ vim replica-set.yml
+
+Now, we should not use create commands, we should use replace command.
+
+$ kubectl replace -f replica-set.yml
+
+$ kubectl  get pods  ( We should get 6 pods )
+
+
+OPTION 2: 
+
+$ kubectl scale --replicas=2 -f replica-set.yml
+
+$ kubectl  get pods  ( We should get 2 pods )

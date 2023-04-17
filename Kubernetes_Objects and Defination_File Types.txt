@@ -1,0 +1,61 @@
+Kuberntes uses various types of objects.
+
+1 Pod:  This is a layer of abstraction on top of a container. This is the smallest object that kubernetes can work on. In the pod, we have the container. kubectl commands will work on the pod and pod communicates there instructions to the container.
+
+2. Service Object: This is used for port mapping and network load balancing.
+
+3. NameSpace: This is used for creating partitions in the cluster. Pods running in  a namespace cannot communicate with other pods running in other namespace.
+
+4. Secrets: This is used for passing encrypted data to the pods.
+
+5. ReplicaSet / Replication COntroller: This is used for managing multiple replicas of a pod to perform activities like load balancing and autoscaling.
+
+6. Deployment: This is used for performing all activites that a ReplicaSet can do. It can also handle rollling updates..
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Definition file, will have 4 top level elements
+
+1. apiVersion:
+2. kind:
+3. metadata:
+4. spec:
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+apiVersion:
+---------------
+Depending on kubernetes object we want to create, there is corresponding code library we want to use.
+
+apiVersion referes to code library
+
+Kind     			apiVersion
+========================
+Pod       			v1
+Service   			v1
+NameSpace     		v1
+Secrets         		v1
+RepliaSet       		apps/v1
+Deployment      		apps/v1
+
+
+kind:
+----------
+Refers to kubernetes object which we want to create.
+Ex: Pod, Replicaset, service etc
+
+metadata:
+-----------
+Additional information about the kubernets object
+like name, labels  etc
+
+spec:
+------
+Contains docker container related information like image name, environment variables, port mapping etc.
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

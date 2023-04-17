@@ -1,0 +1,90 @@
+
+++++++++++++++++++++++++++++++++++++++ DEPLOYMENT OBJECT ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Deployment Object
+-------------------------
+This is also an high level object which can be used for scalling, load balancing and perform rolling updates.
+
+Create a deployment file to run nginx 1.7.9 with 3 replicas. 
+Later perform a rolling update to nginx 1.9.1 
+
+
+$ vim deployment.yml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: nginx-deployment
+ labels:
+  author: sunil
+  type: proxyserver
+spec:
+ replicas: 3
+ selector:
+  matchLabels:
+   type: proxyserver
+ template:
+  metadata:
+   name: nginx-pod
+   labels:
+    type: proxyserver
+  spec:
+   containers:
+    - name: nginx
+      image: nginx:1.7.9
+      ports:
+       - containerPort: 80
+         hostPort: 8888
+ 
+
+:wq
+
+$ kubectl get all  ( we have one   default service running )
+
+$ kubectl create -f deployment.yml
+
+TO check, if the deployment is created or not
+--------------------------------------------
+$ kubectl get deployment ( we can see 1 deployment object )
+
+
+
+
+$ kubectl get pods  ( we should get 3 pods )
+
+
+
+We can anyways perform scaling, apart from that we can perform rolling updates.
+
+$ kubectl get all  (  we get all the objects )
+Take a note of the full name of the deployment object
+
+ 
+deployment.apps/nginx-deployment
+
+
+To perform rolling update
+-----------------------------
+
+$ kubectl --record deployment.apps/nginx-deployment  set image deployment.v1.apps/nginx-deployment nginx=nginx:1.9.1
+
+We get a message ( image updated )
+
+$ kubectl get pods
+To know more about pod
+------------------------
+$ kubectl describe pods podname
+
+nginx-deployment-6fdc797dc6-qrlqb
+
+
+
+$ kubectl describe pods nginx-deployment-6fdc797dc6-qrlqb | less
+
+we can see as Image: nginx:1.9.1
+
+
+:q
+( It will take some time )
+
+$ kubectl  get pods

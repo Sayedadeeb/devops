@@ -1,0 +1,28 @@
+
++++++++++++++++++++++++++++++++ POD DEFINITION FILE 2 ++++++++++++++++++++++++++++++++++++++++++++
+
+Ex 2:
+---------
+vim pod-definition2.yml
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+ name: postgres-pod
+ labels:
+  author: sunil
+  type: database
+spec:
+ containers:
+  - name: mypostgres
+    image: postgres
+    env:
+     - name: POSTGRES_PASSWORD
+       value: durgasoft
+     - name: POSTGRES_USER
+       value: myuser
+     - name: POSTGRES_DB
+       value: mydb
+
+:wq
