@@ -9,7 +9,7 @@ then
 	echo -e "\n Both are Equal"
 
 #################################
-# YOU CANT USE 'else' AFTER 'if'
+# YOU CAN'T USE 'else' AFTER 'if'
 
 
 
